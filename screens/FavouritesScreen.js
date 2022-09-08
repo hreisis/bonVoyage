@@ -1,0 +1,50 @@
+import { useSelector } from "react-redux";
+import { View, FlatList, Text } from 'react-native';
+import { Avatar, ListItem } from "react-native-elements";
+import Loading from "../components/LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
+
+const FavouritesScreen = ({ navigation }) => {
+    const { campsitesArray, isLoading, errMess} = useSelector(
+        (state) => state.campsites
+    );
+    const favourites = useSelector((state) => state.favourites);
+    const renderFavouriteItem = ({ item: campsite }) => {
+        return (
+            <ListItem onPress={() => navigation.navigate('Directory', {
+                screen: 'CampsiteInfo',
+                params: { campsite }
+            })}
+            >
+                <Avatar rounded source={{ uri: baseUrl + campsite.image }} />
+                <ListItem.Content>
+                    <ListItem.Title>{campsite.name}</ListItem.Title>
+                    <ListItem.Subtitle>{campsite.description}</ListItem.Subtitle>
+                </ListItem.Content>
+                
+            </ListItem>
+        )
+    }
+
+    if (isLoading) {
+        return <Loading />;
+    }
+    if (errMess) {
+        return (
+            <View>
+                 <Text>{errMess}</Text>
+            </View>
+        )
+    }
+    return (
+        <FlatList
+            data={campsitesArray.filter((campsite) =>
+                favourites.includes(campsite.id)
+                )}
+                renderItem={renderFavouriteItem}
+                keyExtractor={(item) => item.id.toString()}
+        />
+    )
+};
+
+export default FavouritesScreen;
