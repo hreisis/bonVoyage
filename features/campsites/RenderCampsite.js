@@ -6,7 +6,7 @@ import * as Animatable from 'react-native-animatable';
 import { favouritesReducer } from '../favourites/favouriteSlice';
 
 const RenderCampsite = (props) => {
-    const { campsite } = props;
+    const { campsite } = props; 
 
     const view = useRef();//in order to set an animation, need a reference first
 
