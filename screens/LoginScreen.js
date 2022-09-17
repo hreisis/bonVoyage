@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Image} from 'react-native';
-import { CheckBox, checkBox, Input, Button } from 'react-native-elements';
+import { CheckBox, Input, Button } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import * as ImagePicker from 'expo-image-picker';
 import { baseUrl } from '../shared/baseUrl';
 import logo from '../assets/images/logo.png';
+import * as ImageManipulator from 'expo-image-manipulator';
+import { SaveFormat } from 'expo-image-manipulator';
+import * as MediaLibrary from 'expo-media-library';
 
 const LoginTab = ( {navigation}) => {
     const [username, setUsername] = useState('');
@@ -142,13 +145,46 @@ const RegisterTab = () => {
             const capturedImage = await ImagePicker.launchCameraAsync({
                 allowsEditing: true,
                 aspect: [1,1]
-            });
+            }); 
             if (!capturedImage.cancelled) {
                 //check if the image is not cancelled
                 console.log(capturedImage);
-                setImageUrl(capturedImage.uri); //url: location uri: identifier
+                //setImageUrl(capturedImage.uri); //url: location uri: identifier
+                processImage(capturedImage.uri);
+                MediaLibrary.saveToLibraryAsync(capturedImage.uri);
             }
         }
+    }
+
+    const getImageFromGallery = async() => {
+        const mediaLibraryPermissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (mediaLibraryPermissions.status === 'granted') {
+            const capturedImage = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                aspect: [1,1]
+            });
+            if (!capturedImage.cancelled) {
+                console.log(capturedImage);
+                processImage(capturedImage.uri);
+            }
+            
+        }
+    
+    }
+
+    const processImage = async(imgUri) => {
+        const processedImage = await ImageManipulator.manipulateAsync(
+            imgUri,
+            [
+                {resize: {
+                height: 400, 
+                width: 400
+              }},
+            ],
+            { format: SaveFormat.PNG }
+        );
+        console.log(processedImage);
+        setImageUrl(processedImage.uri);
     }
 
     return(<ScrollView>
@@ -160,6 +196,7 @@ const RegisterTab = () => {
                     style={styles.image}
                 />
                 <Button title='Camera' onPress={getImageFromCamera} />
+                <Button title='Gallery' onPress={getImageFromGallery}/>
             </View>
             <Input 
                 placeholder='Username'
