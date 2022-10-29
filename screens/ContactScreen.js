@@ -6,7 +6,7 @@ import * as MailComposer from 'expo-mail-composer';
 const ContactScreen = () => {
     const sendMail = () => {
         MailComposer.composeAsync({
-            recipients: ['campsites@nucamp.co'],
+            recipients: ['info@livehouse.co'],
             subject: 'Inquiry',
             body:'To whom it may concerned:'
         });
@@ -24,14 +24,10 @@ const ContactScreen = () => {
                     
                 <Card.Divider />
                 
-                <Text>1 Nucamp Way</Text>
-                <Text>Seattle, WA 98001</Text>
-                <Text  style = {{marginBottom: 10 }}>U.S.A.</Text>
-                <Text>Phone: 1-206-555-1234</Text>
-                <Text>Email: campsites@nucamp.co</Text>
+                <Text>Please do not hesitate to contact us. Simply send us an email for any question you might have.</Text>
                 <Button
                     title='Send Email'
-                    buttonStyle={{ backgroundColor: '#5637DD', margin: 40 }}
+                    buttonStyle={{ backgroundColor: '#16191f', margin: 40 }}
                     icon={
                         <Icon
                             name="envelope-o"

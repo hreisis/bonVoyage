@@ -1,14 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { FlatList, StyleSheet, Text, View, Button, Modal,} from 'react-native';
-import RenderCampsite from '../features/campsites/RenderCampsite';
+import RenderStudio from '../features/studios/RenderStudio';
 import { toggleFavourite } from '../features/favourites/favouriteSlice';
 import {Input, Rating, Icon} from 'react-native-elements';
 import { postComment } from '../features/comments/commentsSlice';
 import * as Animatable from 'react-native-animatable';
 
-const CampsiteInfoScreen = ({ route }) => {
-    const { campsite } = route.params;
+const StudioInfoScreen = ({ route }) => {
+    const { studio } = route.params;
     const comments = useSelector((state) => state.comments);
     const favourites = useSelector((state) => state.favourites);
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const CampsiteInfoScreen = ({ route }) => {
 
     const handleSubmit = () => {
         const newComment = {
-            campsiteId: campsite.id,
+            studioId: studio.id,
             author,
             rating,
             text
@@ -61,7 +61,7 @@ const CampsiteInfoScreen = ({ route }) => {
     >        
         <FlatList //FlatList must be at top level
             data={comments.commentsArray.filter(
-                (comment) => comment.campsiteId === campsite.id
+                (comment) => comment.studioId === studio.id
             )}
             renderItem={renderCommentItem}
             keyExtractor={(item) => item.id.toString()}
@@ -71,10 +71,10 @@ const CampsiteInfoScreen = ({ route }) => {
             }}
             ListHeaderComponent={
                 <>
-                    <RenderCampsite 
-                        campsite={campsite}
-                        isFavourite={favourites.includes(campsite.id)}
-                        markFavourite={() => dispatch(toggleFavourite(campsite.id))} 
+                    <RenderStudio 
+                        studio={studio}
+                        isFavourite={favourites.includes(studio.id)}
+                        markFavourite={() => dispatch(toggleFavourite(studio.id))} 
                         onShowModal={() => setShowModal(!showModal)}/>
                     <Text style={styles.commentsTitle}>Comments</Text>
                 </>
@@ -123,7 +123,7 @@ const CampsiteInfoScreen = ({ route }) => {
                             handleSubmit();
                             resetForm();
                         }}
-                        color='#5637DD'
+                        color='#101119'
                         title='Submit'
                     />
                 </View>
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CampsiteInfoScreen;
+export default StudioInfoScreen;

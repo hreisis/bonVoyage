@@ -7,40 +7,40 @@ import * as Animatable from 'react-native-animatable';
 
 const DirectoryScreen = ({ navigation }) => {
 
-    const campsites = useSelector((state) => state.campsites);
+    const studios = useSelector((state) => state.studios);
 
-    if (campsites.isLoading) {
+    if (studios.isLoading) {
         return <Loading />;
     }
-    if (campsites.errMess) {
+    if (studios.errMess) {
         return (
             <View>
-                <Text>{campsites.errMess}</Text>
+                <Text>{studios.errMess}</Text>
             </View>
         );
     }
 
-    const renderDirectoryItem = ({ item: campsite }) => {
+    const renderDirectoryItem = ({ item: studio }) => {
         return (
             <Animatable.View
             animation='fadeInRightBig'
             duration={2000}
         >
             <Tile
-                title={campsite.name}
-                caption={campsite.description}
+                title={studio.name}
+                caption={studio.description}
                 featured
                 onPress={() =>
-                    navigation.navigate('CampsiteInfo', { campsite })
+                    navigation.navigate('StudioInfo', { studio })
                 }
-                imageSrc = {{ uri: baseUrl + campsite.image}}
+                imageSrc = {{ uri: baseUrl + studio.image}}
             />
             </Animatable.View>
         );
     };
     return (
         <FlatList
-            data={campsites.campsitesArray}
+            data={studios.studiosArray}
             renderItem={renderDirectoryItem}
             keyExtractor={(item) => item.id.toString()}
         />

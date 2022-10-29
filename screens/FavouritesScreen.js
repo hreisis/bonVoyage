@@ -8,49 +8,49 @@ import { toggleFavourite } from "../features/favourites/favouriteSlice";
 import * as Animatable from 'react-native-animatable';
 
 const FavouritesScreen = ({ navigation }) => {
-    const { campsitesArray, isLoading, errMess} = useSelector(
-        (state) => state.campsites
+    const { studiosArray, isLoading, errMess} = useSelector(
+        (state) => state.studios
     );
     const favourites = useSelector((state) => state.favourites);
     const dispatch = useDispatch();
 
-    const renderFavouriteItem = ({ item: campsite }) => {
+    const renderFavouriteItem = ({ item: studio }) => {
         return (
             <SwipeRow rightOpenValue={-100}>
                 <View style={styles.deleteView}>
                     <TouchableOpacity
                         style={styles.deleteTouchable}
                         onPress={() => Alert.alert('Delete Favourites?',
-                            'Are you sure you wish to delete the favourite campsite ' + campsite.name + '?',
+                            'Are you sure you wish to delete the favourite studio ' + studio.name + '?',
                             [
                                 {
                                     text: 'Cancel',
-                                    onPress: () => console.log(campsite.name + 'Not Deleted'),
+                                    onPress: () => console.log(studio.name + 'Not Deleted'),
                                     style: 'cancel'
                                 },
                                 {
                                     text: 'OK',
-                                    onPress: () => dispatch(toggleFavourite(campsite.id))
+                                    onPress: () => dispatch(toggleFavourite(studio.id))
                                     
                             }
                             ],
                             { cancelable: false }
                             )}>
-                            {/*dispatch(toggleFavourite(campsite.id))} DELETE DIRECTLY*/}
+                            {/*dispatch(toggleFavourite(studio.id))} DELETE DIRECTLY*/}
                         <Text style={styles.deleteText}>Delete</Text>
                     </TouchableOpacity>
                 </View>
                 <View>
                     {/*second view is default */}
                     <ListItem onPress={() => navigation.navigate('Directory', {
-                        screen: 'CampsiteInfo',
-                        params: { campsite }
+                        screen: 'StudioInfo',
+                        params: { studio }
                     })}
                     >
-                        <Avatar rounded source={{ uri: baseUrl + campsite.image }} />
+                        <Avatar rounded source={{ uri: baseUrl + studio.image }} />
                         <ListItem.Content>
-                            <ListItem.Title>{campsite.name}</ListItem.Title>
-                            <ListItem.Subtitle>{campsite.description}</ListItem.Subtitle>
+                            <ListItem.Title>{studio.name}</ListItem.Title>
+                            <ListItem.Subtitle>{studio.description}</ListItem.Subtitle>
                         </ListItem.Content>
                     </ListItem>
                 </View>
@@ -76,8 +76,8 @@ const FavouritesScreen = ({ navigation }) => {
         duration={2000}
     >
         <FlatList
-            data={campsitesArray.filter((campsite) =>
-                favourites.includes(campsite.id)
+            data={studiosArray.filter((studio) =>
+                favourites.includes(studio.id)
                 )}
                 renderItem={renderFavouriteItem}
                 keyExtractor={(item) => item.id.toString()}

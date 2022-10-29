@@ -1,7 +1,6 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { campsitesReducer } from '../features/campsites/campsitesSlice';
+import { studiosReducer } from '../features/studios/studiosSlice';
 import { commentsReducer } from '../features/comments/commentsSlice';
-import { partnersReducer } from '../features/partners/partnersSlice';
 import { promotionsReducer } from '../features/promotions/promotionsSlice';
 import { favouritesReducer } from '../features/favourites/favouriteSlice';
 import {
@@ -24,9 +23,8 @@ const config = {
 
 export const store = configureStore({
     reducer: persistCombineReducers(config, {
-        campsites: campsitesReducer,
+        studios: studiosReducer,
         comments: commentsReducer,
-        partners: partnersReducer,
         promotions: promotionsReducer,
         favourites: favouritesReducer
     }),

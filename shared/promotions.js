@@ -1,10 +1,16 @@
 export const PROMOTIONS = [
     {
         id: 0,
-        name: 'Mountain Adventure',
-        image: require("../assets/images/breadcrumb-trail.jpg"),
-        featured: true,
-        description:
-            'Book a 5-day mountain trek with a seasoned outdoor guide! Fly fishing equipment and lessons provided.',
+        name:"Studio Standard 3",
+        image: require("../assets/images/studio3.jpg"),
+        featured: false,
+        description: "Book during weekdays - got 50% off!"
     },
+    {
+        id: 1,
+        name:"Studio Standard 3",
+        image: require("../assets/images/studio2.jpg"),
+        featured: false,
+        description: "Sign up & Recieve our latest promotion from your phone!"
+    }
 ];

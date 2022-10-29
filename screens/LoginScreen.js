@@ -74,7 +74,7 @@ const LoginTab = ( {navigation}) => {
                 <Button //Button in react-native-element is more advanced so it can use icon
                     onPress={() => handleLogin()}
                     title='Login'
-                    color='#5637DD'
+                    color='#101119'
                     icon={
                         <Icon
                             name='sign-in'
@@ -83,7 +83,7 @@ const LoginTab = ( {navigation}) => {
                             iconStyle={{ marginRight: 10}}
                         />
                     }
-                    buttonStyle={{ backgroundColor: '#5637DD' }}
+                    buttonStyle={{ backgroundColor: '#16191f' }}
                 />
             </View>
             <View style={styles.formButton}>
@@ -95,11 +95,11 @@ const LoginTab = ( {navigation}) => {
                         <Icon
                             name='user-plus'
                             type='font-awesome'
-                            color='blue'
+                            color='#16191f'
                             iconStyle={{ marginRight: 10}}
                         />
                     }
-                    titleStyle={{ color: 'blue' }}
+                    titleStyle={{ color: '#16191f' }}
                 />
             </View>
         </View>
@@ -195,12 +195,12 @@ const RegisterTab = () => {
                     loadingIndicatorSource={logo}
                     style={styles.image}
                 />
-                <Button title='Camera' onPress={getImageFromCamera} />
-                <Button title='Gallery' onPress={getImageFromGallery}/>
+                <Button title='Camera' buttonStyle={{ backgroundColor: '#16191f' }} onPress={getImageFromCamera} />
+                <Button title='Gallery' buttonStyle={{ backgroundColor: '#16191f' }} onPress={getImageFromGallery}/>
             </View>
             <Input 
                 placeholder='Username'
-                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                leftIcon={{ type: 'font-awesome', name: 'user-o'}}
                 onChangeText={(text) => setUsername(text)}
                 value={username}
                 containerStyle={styles.formInput}
@@ -249,7 +249,7 @@ const RegisterTab = () => {
                 <Button //Button in react-native-element is more advanced so it can use icon
                     onPress={() => handleRegister()}
                     title='Register'
-                    color='#5637DD'
+                    color='#3b3c51'
                     icon={
                         <Icon
                             name='user-plus'
@@ -258,7 +258,7 @@ const RegisterTab = () => {
                             iconStyle={{ marginRight: 10}}
                         />
                     }
-                    buttonStyle={{ backgroundColor: '#5637DD' }}
+                    buttonStyle={{ backgroundColor: '#16191f' }}
                 />
             </View>
         </View>
@@ -269,11 +269,11 @@ const Tab = createBottomTabNavigator(); //returns an object contains navigator a
 
 const LoginScreen =() => {
     const tabBarOptions ={
-        activeBackgroundColor: '#5637DD',
-        inactiveBackgroundColor: '#CEC8FF',
+        activeBackgroundColor: '#16191f',
+        inactiveBackgroundColor: '#3b3c51',
         activeTintColor: '#fff',
         inactiveTintColor: '#808080',
-        labelStyle: { fontSize: 16}
+        labelStyle: { fontSize: 14}
     };
 
     return(

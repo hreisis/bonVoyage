@@ -1,19 +1,17 @@
 import { Platform, View, StyleSheet, Image, Text, Alert, ToastAndroid } from 'react-native';
 import Constants from 'expo-constants';
-import CampsiteInfoScreen from './CampsiteInfoScreen';
+import StudioInfoScreen from './StudioInfoScreen';
 import DirectoryScreen from './DirectoryScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import HomeScreen from './HomeScreen';
 import ContactScreen from './ContactScreen';
-import AboutScreen from './AboutScreen';
 import ReservationScreen from './ReservationScreen';
 import { Icon } from 'react-native-elements';
 import logo from '../assets/images/logo.png';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchPartners } from '../features/partners/partnersSlice';
-import { fetchCampsites } from '../features/campsites/campsitesSlice';
+import { fetchStudios } from '../features/studios/studiosSlice';
 import { fetchPromotions } from '../features/promotions/promotionsSlice';
 import { fetchComments } from '../features/comments/commentsSlice';
 import FavouritesScreen from './FavouritesScreen';
@@ -24,29 +22,8 @@ import NetInfo from '@react-native-community/netinfo';
 const Drawer = createDrawerNavigator();
 
 const screenOptions = {
-    headerTintColor: '#fff',
-    headerStyle: { backgroundColor: '#5637DD' }
-};
-
-const AboutNavigator = () => {
-    const Stack = createStackNavigator();
-    return (
-        <Stack.Navigator screenOptions={screenOptions}>
-            <Stack.Screen
-                name='About'
-                component={AboutScreen}
-                options={({ navigation })=>({ 
-                    headerLeft: () => (
-                        <Icon 
-                            name='info-circle'
-                            type='font-awesome'
-                            iconStyle={styles.stackIcon}
-                            onPress = {() => navigation.toggleDrawer()} />
-                    )
-                })}
-                />
-        </Stack.Navigator>
-    );
+    headerTintColor: '#e0ce99',
+    headerStyle: { backgroundColor: '#12151a' }
 };
 
 const ContactNavigator =() => {
@@ -102,7 +79,7 @@ const FavouritesNavigator = () => {
                 name='Favourites'
                 component={FavouritesScreen}
                 options={({ navigation }) => ({
-                    title: 'Favourite Campsites',
+                    title: 'Favourite Studios',
                     headerLeft: () => (
                         <Icon
                             name='heart'
@@ -178,7 +155,7 @@ const DirectoryNavigator = () => {
                 name='Directory'
                 component={DirectoryScreen}
                 options={({ navigation })=>({ 
-                    title: 'Campsite Directory',
+                    title: 'Studio Directory',
                     headerLeft: () => (
                         <Icon 
                             name='list'
@@ -189,10 +166,10 @@ const DirectoryNavigator = () => {
                 })}
             />
             <Stack.Screen
-                name='CampsiteInfo'
-                component={CampsiteInfoScreen}
+                name='StudioInfo'
+                component={StudioInfoScreen}
                 options={({ route }) => ({
-                    title: route.params.campsite.name
+                    title: route.params.studio.name
                 })}
             />
         </Stack.Navigator>
@@ -205,11 +182,11 @@ const CustomDrawerContent =(props) => (
             <View style={{ flex: 1 }}>
                 <Image source={logo} style={styles.drawerImage} />
             </View>
-            <View style={{ flex: 2 }}>
-                <Text style={styles.drawerHeaderText}>Nucamp</Text>
+            <View style={{ flex: 1 }}>
+                <Text style={styles.drawerHeaderText}>PIRATES</Text>
             </View>
         </View>
-        <DrawerItemList {...props} labelStyle={{ fontWeight: 'bold'}} />
+        <DrawerItemList {...props} labelStyle={{ fontWeight: 'bold'}} style={{activeBackgroundColor: '#16191f'}} />
     </DrawerContentScrollView>
 )
 
@@ -217,9 +194,8 @@ const Main = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchCampsites());
+        dispatch(fetchStudios());
         dispatch(fetchPromotions());
-        dispatch(fetchPartners());
         dispatch(fetchComments());
     }, [dispatch]);
 
@@ -278,10 +254,12 @@ const Main = () => {
                     Platform.OS === 'ios' ? 0 : Constants.statusBarHeight
             }}
         >
-            <Drawer.Navigator
+            <Drawer.Navigator            
                 initialRouteName='Home' //page we first open up the app
                 drawerContent={CustomDrawerContent}
-                drawerStyle={{ backgroundColor: '#CEC8FF' }}
+                drawerStyle={{ backgroundColor: '#e3d099' }}
+                activeBackgroundColor='#16191f'
+                activeTintColor = '#16191f'
             >
                 <Drawer.Screen
                     name='Login'
@@ -315,7 +293,7 @@ const Main = () => {
                 <Drawer.Screen
                     name='Directory'
                     component={DirectoryNavigator}
-                    options={{ title: 'Campsite Directory',
+                    options={{ title: 'Studio Directory',
                         drawerIcon: ({ color }) => (
                             <Icon
                                 name='list'
@@ -327,10 +305,10 @@ const Main = () => {
                 />
 
                 <Drawer.Screen
-                    name='ReserveCampsite'
+                    name='ReserveStudio'
                     component={ReservationNavigator}
                     options={{
-                        title: 'Reserve Campsite',
+                        title: 'Reserve Studio',
                         drawerIcon: ({ color }) => (
                             <Icon
                                 name='tree'
@@ -360,21 +338,6 @@ const Main = () => {
                     }}
                 />
                 <Drawer.Screen 
-                    name='About'
-                    component={AboutNavigator}
-                    options={{
-                        title: 'About',
-                        drawerIcon: ({ color }) => (
-                            <Icon
-                                name='info-circle'
-                                type='font-awesome'
-                                size={24}
-                                iconStyle={{ width: 24}}
-                                color={color} />
-                        ) 
-                    }}
-                />
-                <Drawer.Screen 
                     name='Contact'
                     component={ContactNavigator}
                     options={{ title:'Contact Us',
@@ -394,7 +357,7 @@ const Main = () => {
 
 const styles = StyleSheet.create({
     drawerHeader: {
-        backgroundColor: '#5637DD',
+        backgroundColor: '#12151a',
         height: 140,
         alignItems: 'center',
         justifyContent:'center',
@@ -402,18 +365,18 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     drawerHeaderText: {
-        color: '#fff',
+        color: '#e0ce99',
         fontSize: 24,
         fontWeight: 'bold'
     },
     drawerImage: {
         margin: 10,
-        height: 60,
-        width:60
+        height: 80,
+        width: 80
     },
     stackIcon: {
         marginLeft: 10,
-        color: '#fff',
+        color: '#e0ce99',
         fontSize: 24
     }
 });

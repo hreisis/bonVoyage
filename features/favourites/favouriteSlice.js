@@ -5,7 +5,7 @@ const favouritesSlice = createSlice({
     initialState: [],
     reducers: {
         toggleFavourite: (favourites, action) => {
-            if (favourites.includes(action.payload)) { //where actions.payload means the campsiteId
+            if (favourites.includes(action.payload)) { //where actions.payload means the studioId
                 return favourites.filter(
                     (favourite) => favourite !== action.payload
                 );

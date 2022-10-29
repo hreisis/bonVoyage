@@ -5,8 +5,8 @@ import { baseUrl } from '../../shared/baseUrl';
 import * as Animatable from 'react-native-animatable';
 import { favouritesReducer } from '../favourites/favouriteSlice';
 
-const RenderCampsite = (props) => {
-    const { campsite } = props; 
+const RenderStudio = (props) => {
+    const { studio } = props; 
 
     const view = useRef();//in order to set an animation, need a reference first
 
@@ -27,7 +27,7 @@ const RenderCampsite = (props) => {
             if (isLeftSwipe(gestureState)) { //check for a valid left swipe
                 Alert.alert( // 4 arguments
                     'Add Favourite',
-                    'Are you sure you wish to add' + campsite.name + 'to favourites?',
+                    'Are you sure you wish to add' + studio.name + 'to favourites?',
                     [ //an array of AlertButton objects
                         {
                             text: 'Cancel',
@@ -50,7 +50,7 @@ const RenderCampsite = (props) => {
         }
     })
 
-    const shareCampsite = (title, message, url) => {
+    const shareStudio = (title, message, url) => {
         Share.share(
             {
                 title,
@@ -64,7 +64,7 @@ const RenderCampsite = (props) => {
     }
 
 
-    if (campsite) {
+    if (studio) {
         return (
             <Animatable.View
             animation='fadeInDownBig'
@@ -74,14 +74,14 @@ const RenderCampsite = (props) => {
             {...panResponder.panHandlers} //spread, add another prop
         >
             <Card containerStyle={ styles.cardContainer }>
-                <Card.Image source={{ uri: baseUrl + campsite.image}}>
+                <Card.Image source={{ uri: baseUrl + studio.image}}>
                     <View style={{ justifyContent: 'center', flex: 1 }}>
                         <Text style={styles.cardText}>
-                            {campsite.name}
+                            {studio.name}
                         </Text>
                     </View>
                 </Card.Image>
-                <Text style={{ margin: 20 }}>{campsite.description}</Text>
+                <Text style={{ margin: 20 }}>{studio.description}</Text>
                 <View style={styles.cardRow}>
                     <Icon
                     name = {props.isFavourite? 'heart' : 'heart-o'}
@@ -94,7 +94,7 @@ const RenderCampsite = (props) => {
                     <Icon
                     name = 'pencil'
                     type = 'font-awesome'
-                    color='#5637DD'
+                    color='#101119'
                     raised
                     reverse
                     onPress={() => props.onShowModal()}
@@ -102,13 +102,13 @@ const RenderCampsite = (props) => {
                     <Icon
                     name = 'share'
                     type = 'font-awesome'
-                    color='#5637DD'
+                    color='#101119'
                     raised
                     reverse
-                    onPress={() => shareCampsite(
-                        campsite.name,
-                        campsite.description,
-                        baseUrl + campsite.image
+                    onPress={() => shareStudio(
+                        studio.name,
+                        studio.description,
+                        baseUrl + studio.image
                     )}
                     />
                 </View>
@@ -143,4 +143,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default RenderCampsite;
+export default RenderStudio;

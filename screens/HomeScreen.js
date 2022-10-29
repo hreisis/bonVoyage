@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Text, View } from 'react-native'; 
 import { Card } from 'react-native-elements';
-import CampsiteInfoScreen from './CampsiteInfoScreen';
+import StudioInfoScreen from './StudioInfoScreen';
 import { useSelector } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from '../components/LoadingComponent';
@@ -46,9 +46,8 @@ const FeaturedItem = ( props) => {
 };
 
 const HomeScreen = () => {
-    const campsites = useSelector((state) => state.campsites);
+    const studios = useSelector((state) => state.studios);
     const promotions = useSelector((state) => state.promotions);
-    const partners = useSelector((state) => state.partners);
     const scaleValue = useRef(new Animated.Value(0)).current;
     const scaleAnimation = Animated.timing(scaleValue, {
         toValue: 1,
@@ -56,9 +55,7 @@ const HomeScreen = () => {
         useNativeDriver: true
     })
 
-    const featCampsite = campsites.campsitesArray.find((item) => item.featured);
     const featPromotion = promotions.promotionsArray.find((item) => item.featured);
-    const featPartner = partners.partnersArray.find((item) => item.featured);
 
     useEffect(() => {
         scaleAnimation.start();
@@ -67,17 +64,9 @@ const HomeScreen = () => {
     return (
         <Animated.ScrollView style={{ transform: [{ scale: scaleValue }]}}>
             <FeaturedItem 
-                item={featCampsite}
-                isLoading={campsites.isLoading}
-                errMess={campsites.errMess} />
-            <FeaturedItem 
                 item={featPromotion}
                 isLoading={promotions.isLoading}
                 errMess={promotions.errMess} />
-            <FeaturedItem 
-                item={featPartner}
-                isLoading={partners.isLoading}
-                errMess={partners.errMess} />
         </Animated.ScrollView>
     );
 };

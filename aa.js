@@ -1,10 +1,10 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import RenderCampsite from '../features/campsites/RenderCampsite';
+import RenderStudio from '../features/studios/RenderStudio';
 import { toggleFavorite } from '../features/favorites/favoritesSlice';
 
-const CampsiteInfoScreen = ({ route }) => {
-    const { campsite } = route.params;
+const StudioInfoScreen = ({ route }) => {
+    const { studio } = route.params;
     const comments = useSelector((state) => state.comments);
     const favorites = useSelector((state) => state.favorites);
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const CampsiteInfoScreen = ({ route }) => {
     return (
         <FlatList
             data={comments.commentsArray.filter(
-                (comment) => comment.campsiteId === campsite.id
+                (comment) => comment.studioId === studio.id
             )}
             renderItem={renderCommentItem}
             keyExtractor={(item) => item.id.toString()}
@@ -34,10 +34,10 @@ const CampsiteInfoScreen = ({ route }) => {
             }}
             ListHeaderComponent={
                 <>
-                    <RenderCampsite
-                        campsite={campsite}
-                        isFavorite={favorites.includes(campsite.id)}
-                        markFavorite={() => dispatch(toggleFavorite(campsite.id))}
+                    <RenderStudio
+                        studio={studio}
+                        isFavorite={favorites.includes(studio.id)}
+                        markFavorite={() => dispatch(toggleFavorite(studio.id))}
                     />
                     <Text style={styles.commentsTitle}>Comments</Text>
                 </>
@@ -49,7 +49,7 @@ const CampsiteInfoScreen = ({ route }) => {
 const styles = StyleSheet.create({
     commentsTitle: {
         textAlign: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '##f4f0e4',
         fontSize: 16,
         fontWeight: 'bold',
         color: '#43484D',
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     commentItem: {
         paddingVertical: 10,
         paddingHorizontal: 20,
-        backgroundColor: '#fff'
+        backgroundColor: '#f4f0e4'
     }
 });
 
-export default CampsiteInfoScreen;
+export default StudioInfoScreen;
